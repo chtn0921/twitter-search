@@ -11,8 +11,12 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 var mongodb_uri = process.env.MONGOLAB_URI || 'mongodb://localhost/twitter';
+var mongoConnectOption = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+};
 //connect MongoDB
-mongoose.connect(mongodb_uri, { useMongoClient: true }, function(err, db) {
+mongoose.connect(mongodb_uri, mongoConnectOption, function(err, db) {
     if (!err) {
         console.log('Connected to /twitter!', mongodb_uri);
     } else {

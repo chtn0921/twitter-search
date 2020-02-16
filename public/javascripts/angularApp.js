@@ -1,39 +1,36 @@
 var app = angular.module('VOD', ['ui.router']);
 
-app.config(['$stateProvider', '$urlRouterProvider', '$qProvider', '$locationProvider',
-    function($stateProvider, $urlRouterProvider, $qProvider, $locationProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-        $stateProvider
-            .state('home', {
-                url: '/home',
-                templateUrl: '/javascripts/template/home.html',
-                controller: 'MainCtrl',
-                data: {
-                    requireLogin: true
-                }
-            }).state('login', {
-                url: '/login',
-                templateUrl: '/javascripts/template/login.html',
-                controller: 'AuthCtrl',
-                data: {
-                    requireLogin: false
-                }
-            }).state('register', {
-                url: '/register',
-                templateUrl: '/javascripts/template/register.html',
-                controller: 'AuthCtrl',
-                data: {
-                    requireLogin: false
-                }
-            });
-        $urlRouterProvider.otherwise('home');
-        //for setting url without #
-        $locationProvider.html5Mode(true);
-        $qProvider.errorOnUnhandledRejections(false);
-    }
-]);
+    $stateProvider
+        .state('home', {
+            url: '/home',
+            templateUrl: '/javascripts/template/home.html',
+            controller: 'MainCtrl',
+            data: {
+                requireLogin: true
+            }
+        }).state('login', {
+            url: '/login',
+            templateUrl: '/javascripts/template/login.html',
+            controller: 'AuthCtrl',
+            data: {
+                requireLogin: false
+            }
+        }).state('register', {
+            url: '/register',
+            templateUrl: '/javascripts/template/register.html',
+            controller: 'AuthCtrl',
+            data: {
+                requireLogin: false
+            }
+        });
+    $urlRouterProvider.otherwise('home');
+    //for setting url without #
+    $locationProvider.html5Mode(true);
+});
 
-app.run(['$rootScope', '$state', 'auth', function($rootScope, $state, auth) {
+app.run(function($rootScope, $state, auth) {
     $rootScope.$on('$stateChangeStart', function(event, $stateProvider) {
         var requireLogin = $stateProvider.data.requireLogin;
         if (requireLogin && (!auth.isLoggedIn())) {
@@ -48,4 +45,4 @@ app.run(['$rootScope', '$state', 'auth', function($rootScope, $state, auth) {
                 $state.go("home");
             }
         });
-}]);
+});
