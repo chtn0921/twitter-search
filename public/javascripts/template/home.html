@@ -1,0 +1,36 @@
+<div class="page-header">
+    <h1>Twitter Search :: {{title}}</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 text-center search-form-wrap">
+            <div class="col-md-8">
+                <input class="form-control" id="anythingSearch" type="text" placeholder="Write hastag here to search tweets" ng-model="searchText">
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-info pull-left" ng-disabled="!searchText" ng-click="searchTweets()">Search</button>
+                <div class="lds-dual-ring" ng-if="inProgress"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="post-list-wrap" class="container">
+    <div class="row" ng-if="posts.length">
+        <div class="col-sm-4" ng-repeat="post in posts">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>@{{post.user.screen_name}}</strong></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> {{post.user.name}}</h6>
+                    <p class="card-text"> {{post.text}}</p>
+                    <p class="card-text">
+                        <i class="fa fa-retweet" aria-hidden="true"></i>{{post.retweet_count}}
+                        <i class="fa fa-heart" style="color:red;" aria-hidden="true"></i>{{post.favorite_count}}
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">Created on {{createdDateTime(post.created_at)}}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
